@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
-import { View, TouchableOpacity, Text, StyleSheet, Platform, FlatList } from 'react-native'
+import { View, TouchableOpacity, Text, StyleSheet, Platform, FlatList,AsyncStorage } from 'react-native'
 import { connect } from 'react-redux'
 import { receiveDecks } from '../actions'
 import { getDecks } from '../utils/api'
 import DeckListItem from './DeckListItem'
 import { white } from '../utils/colors'
+
 class DeckList extends Component {
 
     state = {
@@ -12,6 +13,7 @@ class DeckList extends Component {
     };
      
     componentDidMount () {
+        AsyncStorage.clear();
         const { dispatch } = this.props
         getDecks()
         .then((decks) => dispatch(receiveDecks(decks)))
@@ -19,7 +21,6 @@ class DeckList extends Component {
     }
 
     renderItem = ({item}) => {
-       console.log(item)
        return <DeckListItem  deck={item} key={item.title}/>
     }
 

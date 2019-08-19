@@ -3,12 +3,17 @@ import { StyleSheet, Text, View} from 'react-native'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer  from './reducers'
-import { createBottomTabNavigator, createAppContainer } from 'react-navigation'
+import { createBottomTabNavigator, createAppContainer, createStackNavigator } from 'react-navigation'
 import DeckList from './components/DeckList'
 import AddDeck from './components/AddDeck'
+import DeckDetail from './components/DeckDetail'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { white, purple } from './utils/colors'
 
+let AddDeckStack = createStackNavigator({
+  Add: AddDeck,
+  Details: DeckDetail,
+});
 
 let TabNavigator = createBottomTabNavigator({
   DeckList: {
@@ -19,7 +24,7 @@ let TabNavigator = createBottomTabNavigator({
     },
   },
   AddDeck: {
-    screen: AddDeck,
+    screen: AddDeckStack,
     navigationOptions: {
       tabBarLabel: 'Add Deck',
       tabBarIcon: ({ tintColor }) => <FontAwesome name='plus-square' size={30} color={tintColor} />

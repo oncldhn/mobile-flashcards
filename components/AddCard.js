@@ -1,57 +1,49 @@
 import React, { Component } from 'react'
-import { TouchableOpacity, Text, StyleSheet , KeyboardAvoidingView, TextInput, Alert } from 'react-native'
+import { TouchableOpacity, Text, StyleSheet , KeyboardAvoidingView, TextInput } from 'react-native'
 import { purple, white } from '../utils/colors'
 import { connect } from 'react-redux'
 import { createDeck } from '../actions'
 import { saveDeckTitle } from '../utils/api'
 
-class AddDeck extends Component {
-
+class AddCard extends Component {
     state = {
-        input:''
+        question:'',
+        answer:''
     }
 
-    onPress = () => {
-        const deckTitle = this.state.input
-        if(this.props.decks[deckTitle]){
-            Alert.alert('Error','A deck already exists with that name')
-            return
-        }
-        this.props.dispatch(createDeck(deckTitle))
-        saveDeckTitle(deckTitle)
-        this.setState({
-            input:''
-        })
-        this.props.navigation.navigate('Details',{
-            deckTitle:deckTitle
-        })
+    addCard = () => {
+        const {question, answer} = this.state
+        console.log(question, answer)
     }
-
-    handleTextChange = (value) => {
-        this.setState(() => {
-            value
-        })
-    }
+    
 
     render () {
         return(
             <KeyboardAvoidingView style={styles.container} behavior='padding'>
-                <Text style={styles.header}>What is the title of your new deck?</Text>
+                <Text style={styles.header}>Question</Text>
                 <TextInput
                     value={this.state.input}
-                    onChangeText={(input) => this.setState({input})}
+                    onChangeText={(input) => this.setState({question:input})}
+                    style={styles.input}
+                    editable = {true}
+                />
+                <Text style={styles.header}>Answer</Text>
+                <TextInput
+                    value={this.state.input}
+                    onChangeText={(input) => this.setState({answer:input})}
                     style={styles.input}
                     editable = {true}
                 />
                 <TouchableOpacity 
                     style={styles.submitBtn}
-                     onPress={this.onPress}
-                     disabled={this.state.input===''}>
-                      <Text style={styles.submitBtnText}>SUBMIT</Text>
+                     onPress={this.addCard}
+                     disabled={this.state.question==='' || this.state.answer==='' }>
+                    <Text style={styles.submitBtnText}>ADD CARD</Text>
                  </TouchableOpacity>
             </KeyboardAvoidingView>
         )
     }
+
 }
 
 const styles = StyleSheet.create({
@@ -88,10 +80,4 @@ const styles = StyleSheet.create({
     },
 })
 
-function mapStateToProps(decks) {
-    return {
-        decks
-    }
-}
-
-export default connect (mapStateToProps) (AddDeck)
+export default connect () (AddCard)

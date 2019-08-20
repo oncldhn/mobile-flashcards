@@ -7,17 +7,45 @@ import { createBottomTabNavigator, createAppContainer, createStackNavigator } fr
 import DeckList from './components/DeckList'
 import AddDeck from './components/AddDeck'
 import DeckDetail from './components/DeckDetail'
+import AddCard from './components/AddCard'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { white, purple } from './utils/colors'
 
 let AddDeckStack = createStackNavigator({
   Add: AddDeck,
   Details: DeckDetail,
+  AddCard:AddCard
 });
+
+AddDeckStack.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  if (navigation.state.index > 0) {
+    tabBarVisible = false;
+  }
+  return {
+    tabBarVisible,
+  };
+};
+
+let DeckListStack = createStackNavigator({
+  List: DeckList,
+  Details: DeckDetail,
+  AddCard:AddCard
+});
+
+DeckListStack.navigationOptions = ({ navigation }) => {
+  let tabBarVisible = true;
+  if (navigation.state.index > 0) {
+    tabBarVisible = false;
+  }
+  return {
+    tabBarVisible,
+  };
+};
 
 let TabNavigator = createBottomTabNavigator({
   DeckList: {
-    screen: DeckList,
+    screen: DeckListStack,
     navigationOptions: {
       tabBarLabel: 'Decks',
       tabBarIcon: ({ tintColor }) => <Ionicons name='ios-bookmarks' size={30} color={tintColor} />

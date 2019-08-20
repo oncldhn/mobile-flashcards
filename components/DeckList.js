@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, TouchableOpacity, Text, StyleSheet, Platform, FlatList,AsyncStorage } from 'react-native'
+import { View, Text, StyleSheet, FlatList,AsyncStorage } from 'react-native'
 import { connect } from 'react-redux'
 import { receiveDecks } from '../actions'
 import { getDecks } from '../utils/api'
@@ -20,8 +20,14 @@ class DeckList extends Component {
         .then(() => this.setState(() => ({ready: true})))
     }
 
+    onDeckSelected = (deck) => {
+        this.props.navigation.navigate('Details', {
+            deckTitle:deck.title
+        })
+    }
+
     renderItem = ({item}) => {
-       return <DeckListItem  deck={item} key={item.title}/>
+       return <DeckListItem  deck={item} key={item.title} onPress={this.onDeckSelected}/>
     }
 
     render () {
@@ -29,7 +35,7 @@ class DeckList extends Component {
             const decks = this.props.decks
             return(
                 <View style ={styles.container}>
-                    <FlatList
+                    <FlatList style={styles.list}
                         data = {Object.values(decks)}
                         renderItem = {this.renderItem}
                         keyExtractor={(item, index) => item.title}
@@ -51,8 +57,12 @@ class DeckList extends Component {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      padding: 20,
       backgroundColor: white
+    },
+    list: {
+        paddingTop: 50,
+        paddingHorizontal: 20,
+
     },
     row: {
       flexDirection: 'row',

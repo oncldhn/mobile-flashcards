@@ -1,10 +1,16 @@
 import React, { Component } from 'react'
-import { View,  Text, StyleSheet, TouchableOpacity } from 'react-native'
+import { View,  Text, StyleSheet, TouchableOpacity, Alert } from 'react-native'
 import { white, black, purple } from '../utils/colors'
 import { connect } from 'react-redux'
 
 
 class DeckDetail extends Component {
+
+    static navigationOptions = ({ navigation }) => {
+        return {
+          title: navigation.getParam('deckTitle', 'Deck Detail'),
+        };
+      };
     
     addCard = () => {
         const deck = this.props.deck
@@ -14,6 +20,11 @@ class DeckDetail extends Component {
     }
 
     startQuiz = () => {
+        const deck = this.props.deck
+        if(deck.questions.length === 0){
+            Alert.alert('Error','There are no cards in the deck!')
+            return
+        }
 
     }
 

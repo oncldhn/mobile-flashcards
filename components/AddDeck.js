@@ -6,12 +6,15 @@ import { createDeck } from '../actions'
 import { saveDeckTitle } from '../utils/api'
 
 class AddDeck extends Component {
+    static navigationOptions = {
+        headerTitle: 'Add Deck'
+    };
 
     state = {
         input:''
     }
 
-    onPress = () => {
+    addDeck = () => {
         const deckTitle = this.state.input
         if(this.props.decks[deckTitle]){
             Alert.alert('Error','A deck already exists with that name')
@@ -45,7 +48,7 @@ class AddDeck extends Component {
                 />
                 <TouchableOpacity 
                     style={styles.submitBtn}
-                     onPress={this.onPress}
+                     onPress={this.addDeck}
                      disabled={this.state.input===''}>
                       <Text style={styles.submitBtnText}>SUBMIT</Text>
                  </TouchableOpacity>

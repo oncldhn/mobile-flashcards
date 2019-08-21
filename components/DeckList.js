@@ -13,7 +13,6 @@ class DeckList extends Component {
     };
      
     componentDidMount () {
-        AsyncStorage.clear();
         const { dispatch } = this.props
         getDecks()
         .then((decks) => dispatch(receiveDecks(decks)))

@@ -15,7 +15,16 @@ let AddDeckStack = createStackNavigator({
   Add: AddDeck,
   Details: DeckDetail,
   AddCard:AddCard
-});
+},{
+  defaultNavigationOptions: {
+    headerStyle: {
+    },
+  },
+  navigationOptions: {
+      headerTitle: 'Home!',
+  },
+}
+);
 
 AddDeckStack.navigationOptions = ({ navigation }) => {
   let tabBarVisible = true;
@@ -31,6 +40,14 @@ let DeckListStack = createStackNavigator({
   List: DeckList,
   Details: DeckDetail,
   AddCard:AddCard
+},{
+  defaultNavigationOptions: {
+    headerStyle: {
+    },
+  },
+  navigationOptions: {
+    headerTitle: 'Home!',
+  },
 });
 
 DeckListStack.navigationOptions = ({ navigation }) => {

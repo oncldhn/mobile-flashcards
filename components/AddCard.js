@@ -2,10 +2,14 @@ import React, { Component } from 'react'
 import { TouchableOpacity, Text, StyleSheet , KeyboardAvoidingView, TextInput } from 'react-native'
 import { purple, white } from '../utils/colors'
 import { connect } from 'react-redux'
-import { createDeck } from '../actions'
-import { saveDeckTitle } from '../utils/api'
-
+import { addCardToDeck } from '../utils/api'
+import { saveCardToDeck} from '../actions/index'
 class AddCard extends Component {
+
+    static navigationOptions = {
+        headerTitle: 'Add Card'
+    };
+
     state = {
         question:'',
         answer:''
@@ -13,7 +17,12 @@ class AddCard extends Component {
 
     addCard = () => {
         const {question, answer} = this.state
+        const dispatch = this.props.dispatch
+        const deckTitle = this.props.navigation.getParam('deckTitle', 'Deck Detail')
         console.log(question, answer)
+        dispatch(saveCardToDeck(deckTitle,{question,answer}))
+        addCardToDeck(deckTitle,{question,answer})
+        this.props.navigation.goBack()
     }
     
 

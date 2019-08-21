@@ -18,7 +18,17 @@ export function saveDeckTitle (title) {
 }
 
 export function addCardToDeck (title,card) {
-
+  return AsyncStorage.getItem(APP_STORAGE_KEY).then(response => {
+    const decks = JSON.parse(response);
+    decks[title] = {
+      ...decks[title],
+      questions: [
+        ...decks[title].questions,
+        { question: card.question, answer: card.answer }
+      ]
+    };
+    AsyncStorage.setItem(APP_STORAGE_KEY, JSON.stringify(decks));
+  });
 }
 
 setDummyData = () => {

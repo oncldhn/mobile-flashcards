@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View} from 'react-native'
+import { StyleSheet } from 'react-native'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import reducer  from './reducers'
@@ -8,13 +8,16 @@ import DeckList from './components/DeckList'
 import AddDeck from './components/AddDeck'
 import DeckDetail from './components/DeckDetail'
 import AddCard from './components/AddCard'
+import Quiz from './components/Quiz'
 import { FontAwesome, Ionicons } from '@expo/vector-icons'
 import { white, purple } from './utils/colors'
+import { setLocalNotification } from './utils/helpers'
 
 let AddDeckStack = createStackNavigator({
   Add: AddDeck,
   Details: DeckDetail,
-  AddCard:AddCard
+  AddCard:AddCard,
+  StartQuiz:Quiz
 },{
   defaultNavigationOptions: {
     headerStyle: {
@@ -39,7 +42,8 @@ AddDeckStack.navigationOptions = ({ navigation }) => {
 let DeckListStack = createStackNavigator({
   List: DeckList,
   Details: DeckDetail,
-  AddCard:AddCard
+  AddCard:AddCard,
+  StartQuiz:Quiz
 },{
   defaultNavigationOptions: {
     headerStyle: {
@@ -98,12 +102,17 @@ let TabNavigator = createBottomTabNavigator({
 let Navigation =  createAppContainer(TabNavigator);
 
 
-export default function App() {
-  return (
-    <Provider store={createStore(reducer)}>
-      <Navigation/>
-    </Provider>
-  );
+export default class App extends React.Component{
+  componentDidMount() {
+    setLocalNotification()
+  }
+  render() {
+    return (
+      <Provider store={createStore(reducer)}>
+        <Navigation/>
+      </Provider>
+    )
+  }
 }
 
 const styles = StyleSheet.create({

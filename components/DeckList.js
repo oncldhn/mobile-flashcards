@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, StyleSheet, FlatList,AsyncStorage } from 'react-native'
+import { View, Text, StyleSheet, FlatList, AsyncStorage} from 'react-native'
 import { connect } from 'react-redux'
 import { receiveDecks } from '../actions'
 import { getDecks } from '../utils/api'
@@ -13,6 +13,7 @@ class DeckList extends Component {
     };
      
     componentDidMount () {
+        AsyncStorage.clear()
         const { dispatch } = this.props
         getDecks()
         .then((decks) => dispatch(receiveDecks(decks)))
@@ -44,7 +45,7 @@ class DeckList extends Component {
         } else {
             return (
                 <View>
-                    <Text>Loading</Text>
+                    <Text>Loading...</Text>
                 </View>
             )
         }

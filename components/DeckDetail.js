@@ -25,7 +25,9 @@ class DeckDetail extends Component {
             Alert.alert('Error','There are no cards in the deck!')
             return
         }
-
+        this.props.navigation.navigate('StartQuiz',{
+            deckTitle: deck.title
+        })
     }
 
     render () {

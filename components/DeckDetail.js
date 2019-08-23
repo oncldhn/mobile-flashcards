@@ -3,7 +3,6 @@ import { View,  Text, StyleSheet, TouchableOpacity, Alert } from 'react-native'
 import { white, black, purple } from '../utils/colors'
 import { connect } from 'react-redux'
 
-
 class DeckDetail extends Component {
 
     static navigationOptions = ({ navigation }) => {

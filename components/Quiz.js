@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { TouchableOpacity, Text, StyleSheet ,View  } from 'react-native'
 import { red, white, black, green, purple } from '../utils/colors'
 import { connect } from 'react-redux'
+import { clearLocalNotification, setLocalNotification } from '../utils/helpers'
 
 class Quiz extends Component {
 
@@ -13,13 +14,15 @@ class Quiz extends Component {
     handleCorrect = () => {
         this.setState((state) => ({
             score: state.score+1 ,
-            questionIndex:state.questionIndex+1
+            questionIndex:state.questionIndex+1,
+            showAnswer:false
         }))
     }
 
     handleIncorrect = () => {
         this.setState((state) => ({
-            questionIndex:state.questionIndex+1 
+            questionIndex:state.questionIndex+1,
+            showAnswer:false
         }))
     }
 
@@ -33,7 +36,7 @@ class Quiz extends Component {
         this.setState({
             questionIndex:0,
             score:0,
-            showAnswer:0
+            showAnswer:false
         })
     }
 
@@ -45,6 +48,8 @@ class Quiz extends Component {
         const question = this.props.questions[this.state.questionIndex]
         //all questions answered
         if(this.state.questionIndex === this.props.questions.length) {
+            //reschedule notifications
+            clearLocalNotification().then(setLocalNotification())
             return (
                 <View style={styles.item}>
                    <Text style={styles.title}>Quiz is over</Text>

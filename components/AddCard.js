@@ -20,12 +20,16 @@ class AddCard extends Component {
         const {question, answer} = this.state
         const dispatch = this.props.dispatch
         const deckTitle = this.props.navigation.getParam('deckTitle', 'Deck Detail')
-        console.log(question, answer)
         dispatch(saveCardToDeck(deckTitle,{question,answer}))
         addCardToDeck(deckTitle,{question,answer})
         this.props.navigation.goBack()
     }
     
+    handleChange = (value, label) => {
+        this.setState({
+          [label]: value
+        })
+      }
 
     render () {
         return(
@@ -33,14 +37,14 @@ class AddCard extends Component {
                 <Text style={styles.header}>Question</Text>
                 <TextInput
                     value={this.state.input}
-                    onChangeText={(input) => this.setState({question:input})}
+                    onChangeText={(input) => this.handleChange(input,'question')}
                     style={styles.input}
                     editable = {true}
                 />
                 <Text style={styles.header}>Answer</Text>
                 <TextInput
                     value={this.state.input}
-                    onChangeText={(input) => this.setState({answer:input})}
+                    onChangeText={(input) => this.handleChange(input,'answer')}
                     style={styles.input}
                     editable = {true}
                 />
